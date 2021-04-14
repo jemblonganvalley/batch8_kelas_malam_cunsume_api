@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rest Api</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <h1>Consume Api</h1>
+
+    <form
+      action="http://localhost:3000/api/absen"
+      method="POST"
+      class="absen_form"
+    >
+      <label for="nama">nama</label>
+      <input type="text" name="nama" id="nama" />
+
+      <label for="email">email</label>
+      <input type="email" name="email" id="email" />
+
+      <label for="telpon">telpon</label>
+      <input type="phone" name="telpon" id="telpon" />
+
+      <label for="batch">batch</label>
+      <input type="number" name="batch" id="batch" />
+
+      <button type="submit">absen</button>
+    </form>
+
+    <div id="root">
+      <!--Ari lasso-->
+    </div>
+
+    <script>
+      let root = document.getElementById("root");
+
+      fetch("http://localhost:3000/api/absen", {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          data.map((e) => {
+            root.innerHTML += `
+            
+            <div class="card">
+              
+              <h3>${e.nama}</h3>
+              <p>${e.email}</p>
+              <p>${e.telpon}</p>
+              <small>${e.date}</small>
+              
+            </div>
+            
+            `;
+          });
+        })
+        .catch((err) => console.log(err));
+    </script>
+  </body>
+</html>
